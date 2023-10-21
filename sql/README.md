@@ -1,5 +1,5 @@
 # Database
 
-Import `db_schema.sql` into xampp.
+Import `hungrush.sql` into xampp.
 
 ![db schema](db_schema.png)
