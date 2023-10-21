@@ -22,7 +22,7 @@ This is a group project for a methodology of programming class.
 	- download and extract the zip
 	- in Netbeans, when making a new DB connection, select the extracted msql-connector-j.jar file
 - hungrush database in xampp
-	- import `sql/db_schema.sql` into xampp
+	- import `sql/hungrush.sql` into xampp
 	- don't forget to actually start xampp
 
 #### Clone the repository
