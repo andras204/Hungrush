@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 22, 2023 at 11:02 PM
+-- Generation Time: Oct 22, 2023 at 11:10 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -28,6 +28,8 @@ DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAvailableDishes` (IN `restaurant_id_IN` INT)   SELECT dish_id FROM `dish_available` WHERE restaurant_id=restaurant_id_IN$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getOrderedDishes` (IN `delivery_id_IN` INT)   SELECT dish_id,amount FROM `dish_ordered` WHERE delivery_id=delivery_id_IN$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `isDishAvailable` (IN `dish_id_IN` INT)  COMMENT '0 if unavailable, 1 or more(!) if available' SELECT COUNT(*) FROM `dish_available` WHERE dish_id=dish_id_IN$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `isDishAvailableAtRestaurant` (IN `dish_id_IN` INT, IN `restaurant_id_IN` INT)  COMMENT 'returns 0 if unavailable, 1 if available' SELECT COUNT(*) FROM `dish_available` WHERE dish_id=dish_id_IN AND restaurant_id=restaurant_id_IN$$
 
