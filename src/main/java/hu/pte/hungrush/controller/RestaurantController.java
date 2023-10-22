@@ -16,4 +16,9 @@ public class RestaurantController {
     public List<Integer> getAvailableDishes(@PathVariable Integer id) {
         return service.getAvailableDishIDs(id);
     }
+    
+    @GetMapping("/restaurant/{r_id}/dishAvailable/{d_id}")
+    public Boolean getAvailableDishes(@PathVariable Integer d_id, @PathVariable Integer r_id) {
+        return service.isDishAvailableAtRestaurant(d_id, r_id);
+    }
 }
