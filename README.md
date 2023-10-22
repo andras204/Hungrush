@@ -20,7 +20,7 @@ This is a group project for a methodology of programming class.
 	- goto https://dev.mysql.com/downloads/connector/j/
 	- select 'Platform independent' for operating system
 	- download and extract the zip
-	- in Netbeans, when making a new DB connection, select the extracted msql-connector-j.jar file
+	- Making a new DB connection in Netbeans, using the extracted msql-connector-j.jar file
 - hungrush database in xampp
 	- import `sql/hungrush.sql` into xampp
 	- don't forget to actually start xampp
