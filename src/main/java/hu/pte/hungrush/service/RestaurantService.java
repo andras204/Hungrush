@@ -20,10 +20,20 @@ public class RestaurantService {
     @PersistenceContext
     private EntityManager em;
     
-    public List<Integer> getAvailableDishIDs(Integer restaurandID) {
+    public List<Integer> getAvailableDishIDs(Integer restaurantID) {
         StoredProcedureQuery query = em.createStoredProcedureQuery("getAvailableDishes");
         query.registerStoredProcedureParameter("restaurant_id_IN", Integer.class, ParameterMode.IN);
-        query.setParameter("restaurant_id_IN", restaurandID);
+        query.setParameter("restaurant_id_IN", restaurantID);
         return query.getResultList();
+    }
+    
+    public Boolean isDishAvailableAtRestaurant(Integer dishID, Integer restaurantID) {
+        StoredProcedureQuery query = em.createStoredProcedureQuery("isDishAvailableAtRestaurant");
+        query.registerStoredProcedureParameter("restaurant_id_IN", Integer.class, ParameterMode.IN);
+        query.registerStoredProcedureParameter("dish_id_IN", Integer.class, ParameterMode.IN);
+        query.setParameter("restaurant_id_IN", restaurantID);
+        query.setParameter("dish_id_IN", dishID);
+        int result = Integer.parseInt(query.getSingleResult().toString());
+        return result >= 1;
     }
 }
