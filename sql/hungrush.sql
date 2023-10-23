@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 22, 2023 at 11:10 PM
+-- Generation Time: Oct 23, 2023 at 06:50 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -26,6 +26,8 @@ DELIMITER $$
 -- Procedures
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAvailableDishes` (IN `restaurant_id_IN` INT)   SELECT dish_id FROM `dish_available` WHERE restaurant_id=restaurant_id_IN$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getDish` (IN `dish_id_IN` INT)   SELECT * FROM `dish` WHERE id=dish_id_IN$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getOrderedDishes` (IN `delivery_id_IN` INT)   SELECT dish_id,amount FROM `dish_ordered` WHERE delivery_id=delivery_id_IN$$
 
