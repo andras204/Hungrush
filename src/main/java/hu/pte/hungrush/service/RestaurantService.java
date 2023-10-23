@@ -1,5 +1,6 @@
 package hu.pte.hungrush.service;
 
+import hu.pte.hungrush.model.Dish;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import hu.pte.hungrush.repo.RestaurantRepo;
+import java.util.ArrayList;
 
 @Service
 @Transactional
@@ -20,11 +22,34 @@ public class RestaurantService {
     @PersistenceContext
     private EntityManager em;
     
-    public List<Integer> getAvailableDishIDs(Integer restaurantID) {
+    public List<Dish> getAvailableDishes(Integer restaurantID) {
+        // get list of dish IDs
         StoredProcedureQuery query = em.createStoredProcedureQuery("getAvailableDishes");
         query.registerStoredProcedureParameter("restaurant_id_IN", Integer.class, ParameterMode.IN);
         query.setParameter("restaurant_id_IN", restaurantID);
-        return query.getResultList();
+        List<Integer> ids = query.getResultList();
+        
+        // get the dishes from IDs
+        StoredProcedureQuery dish_decoder = em.createStoredProcedureQuery("getDish");
+        dish_decoder.registerStoredProcedureParameter("dish_id_IN", Integer.class, ParameterMode.IN);
+        List<Dish> dishes = new ArrayList<Dish>();
+        
+        for(int i = 0; i < ids.size(); i++) {
+            dish_decoder.setParameter("dish_id_IN", ids.get(i));
+            // getting data out of a generic Object requires this cancer
+            Object[] o = (Object[]) dish_decoder.getSingleResult();
+            Dish d = new Dish(
+                    (Integer)o[0],
+                    (String)o[1],
+                    (String)o[2],
+                    (Integer)o[3],
+                    (String)o[4]
+            );
+            // man, java is fking garbage
+            dishes.add(d);
+        }
+        
+        return dishes;
     }
     
     public Boolean isDishAvailableAtRestaurant(Integer dishID, Integer restaurantID) {

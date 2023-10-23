@@ -1,5 +1,6 @@
 package hu.pte.hungrush.controller;
 
+import hu.pte.hungrush.model.Dish;
 import hu.pte.hungrush.service.DeliveryService;
 import java.util.List;
 import javax.persistence.Tuple;
@@ -14,7 +15,7 @@ public class DeliveryController {
     private DeliveryService service;
     
     @GetMapping("/delivery/{id}/orderedDishes")
-    public List<Tuple> getOrderedDishes(@PathVariable Integer id) {
+    public List<Dish> getOrderedDishes(@PathVariable Integer id) {
         return service.getOrderedDishes(id);
     }
 }
