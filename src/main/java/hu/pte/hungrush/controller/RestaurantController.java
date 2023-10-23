@@ -1,5 +1,6 @@
 package hu.pte.hungrush.controller;
 
+import hu.pte.hungrush.model.Dish;
 import hu.pte.hungrush.service.RestaurantService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +14,8 @@ public class RestaurantController {
     private RestaurantService service;
     
     @GetMapping("/restaurant/{id}/availableDishes")
-    public List<Integer> getAvailableDishes(@PathVariable Integer id) {
-        return service.getAvailableDishIDs(id);
+    public List<Dish> getAvailableDishes(@PathVariable Integer id) {
+        return service.getAvailableDishes(id);
     }
     
     @GetMapping("/restaurant/{r_id}/dishAvailable/{d_id}")
