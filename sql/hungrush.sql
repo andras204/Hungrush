@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 23, 2023 at 06:50 PM
+-- Generation Time: Oct 24, 2023 at 07:11 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -207,6 +207,18 @@ ALTER TABLE `delivery`
 --
 ALTER TABLE `dish`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `dish_available`
+--
+ALTER TABLE `dish_available`
+  ADD PRIMARY KEY (`restaurant_id`,`dish_id`);
+
+--
+-- Indexes for table `dish_ordered`
+--
+ALTER TABLE `dish_ordered`
+  ADD PRIMARY KEY (`delivery_id`,`dish_id`);
 
 --
 -- Indexes for table `restaurant`
