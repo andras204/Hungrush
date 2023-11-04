@@ -1,5 +1,3 @@
-![dinkDonk](https://cdn.7tv.app/emote/611954ad501aa7dfff341cf6/4x.webp)
-
 # BREAKING CHANGES
 
 ## The entire project has been redone, including the database. `git clone` the project again!
