@@ -16,9 +16,9 @@ public class DishController {
     public Boolean getAvailableDishes(@PathVariable Integer d_id, @PathVariable Integer r_id) {
         return service.isDishAvailableAtRestaurant(d_id, r_id);
     }
-    
+    //added throws exception here
     @GetMapping("/dish/{id}")
-    public Dish getDish(@PathVariable Integer id) {
+    public Dish getDish(@PathVariable Integer id) throws Exception {
         return service.getDish(id);
     }
 }

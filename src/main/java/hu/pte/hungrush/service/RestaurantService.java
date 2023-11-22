@@ -1,6 +1,7 @@
 package hu.pte.hungrush.service;
 
 import hu.pte.hungrush.model.Dish;
+import hu.pte.hungrush.model.Restaurant;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -10,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import hu.pte.hungrush.repo.RestaurantRepo;
+import java.sql.Time;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Service
@@ -36,7 +41,6 @@ public class RestaurantService {
         
         for(int i = 0; i < ids.size(); i++) {
             dish_decoder.setParameter("dish_id_IN", ids.get(i));
-            // getting data out of a generic Object requires this cancer
             Object[] o = (Object[]) dish_decoder.getSingleResult();
             Dish d = new Dish(
                     (Integer)o[0],
@@ -45,7 +49,6 @@ public class RestaurantService {
                     (Integer)o[3],
                     (String)o[4]
             );
-            // man, java is fking garbage
             dishes.add(d);
         }
         
@@ -61,4 +64,20 @@ public class RestaurantService {
         int result = Integer.parseInt(query.getSingleResult().toString());
         return result >= 1;
     }
+                                                      //, Time openingTime, Time closingTime//
+    public boolean isRestaurantOpen(Integer restaurantID) {
+           StoredProcedureQuery query = em.createStoredProcedureQuery("isRestaurantOpen");
+           query.registerStoredProcedureParameter("restaurant_id_IN", Integer.class, ParameterMode.IN);
+           query.setParameter("restaurant_id_IN", restaurantID);
+           int result = Integer.parseInt(query.getSingleResult().toString());
+           return result >= 1;
+//           LocalTime now = LocalTime.now();
+//           LocalTime openTime = openingTime.toLocalTime();
+//           LocalTime closeTime = closingTime.toLocalTime();
+//           
+//
+//        return now.isAfter(openTime) || now.isBefore(closeTime);
+}
+    
+
 }

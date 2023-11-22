@@ -1,6 +1,7 @@
 package hu.pte.hungrush.model;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -11,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -46,12 +45,10 @@ public class Restaurant implements Serializable {
     private String address;
     @Basic(optional = false)
     @Column(name = "opening_time")
-    @Temporal(TemporalType.TIME)
-    private Date openingTime;
+    private Time openingTime;
     @Basic(optional = false)
     @Column(name = "closing_time")
-    @Temporal(TemporalType.TIME)
-    private Date closingTime;
+    private Time closingTime;
 
     public Restaurant() {
     }
@@ -60,7 +57,7 @@ public class Restaurant implements Serializable {
         this.id = id;
     }
 
-    public Restaurant(Integer id, String name, String category, String address, Date openingTime, Date closingTime) {
+    public Restaurant(Integer id, String name, String category, String address, Time openingTime, Time closingTime) {
         this.id = id;
         this.name = name;
         this.category = category;
@@ -101,11 +98,11 @@ public class Restaurant implements Serializable {
         this.address = address;
     }
 
-    public Date getOpeningTime() {
+    public Time getOpeningTime() {
         return openingTime;
     }
 
-    public void setOpeningTime(Date openingTime) {
+    public void setOpeningTime(Time openingTime) {
         this.openingTime = openingTime;
     }
 
@@ -113,7 +110,7 @@ public class Restaurant implements Serializable {
         return closingTime;
     }
 
-    public void setClosingTime(Date closingTime) {
+    public void setClosingTime(Time closingTime) {
         this.closingTime = closingTime;
     }
 
@@ -141,5 +138,7 @@ public class Restaurant implements Serializable {
     public String toString() {
         return "hu.pte.hungrush.models.Restaurant[ id=" + id + " ]";
     }
+
+
     
 }
