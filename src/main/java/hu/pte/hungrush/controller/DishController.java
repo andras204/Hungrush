@@ -18,7 +18,7 @@ public class DishController {
     }
     
     @GetMapping("/dish/{id}")
-    public Dish getDish(@PathVariable Integer id) {
+    public Dish getDish(@PathVariable Integer id) throws Exception {
         return service.getDish(id);
     }
 }
