@@ -2,7 +2,6 @@ package hu.pte.hungrush.model;
 
 import java.io.Serializable;
 import java.sql.Time;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -106,7 +105,7 @@ public class Restaurant implements Serializable {
         this.openingTime = openingTime;
     }
 
-    public Date getClosingTime() {
+    public Time getClosingTime() {
         return closingTime;
     }
 
