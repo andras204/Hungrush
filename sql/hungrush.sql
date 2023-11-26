@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 24, 2023 at 07:11 PM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 22, 2023 at 05:23 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -27,13 +27,28 @@ DELIMITER $$
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getAvailableDishes` (IN `restaurant_id_IN` INT)   SELECT dish_id FROM `dish_available` WHERE restaurant_id=restaurant_id_IN$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getCourierStatus` (IN `courier_id_IN` INT)   SELECT `status` FROM courier where courier_id_IN=id$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getDish` (IN `dish_id_IN` INT)   SELECT * FROM `dish` WHERE id=dish_id_IN$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getDishCategory` (IN `dish_id_IN` INT)   SELECT `category` FROM dish WHERE id=dish_id_IN$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getIdleCouriers` ()   SELECT *
+
+FROM courier
+
+WHERE status = 'idle'$$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getOrderedDishes` (IN `delivery_id_IN` INT)   SELECT dish_id,amount FROM `dish_ordered` WHERE delivery_id=delivery_id_IN$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getRestaurantCategory` (IN `restaurant_id_IN` INT)   SELECT `category` FROM restaurant WHERE id=restaurant_id_IN$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `isDishAvailable` (IN `dish_id_IN` INT)  COMMENT '0 if unavailable, 1 or more(!) if available' SELECT COUNT(*) FROM `dish_available` WHERE dish_id=dish_id_IN$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `isDishAvailableAtRestaurant` (IN `dish_id_IN` INT, IN `restaurant_id_IN` INT)  COMMENT 'returns 0 if unavailable, 1 if available' SELECT COUNT(*) FROM `dish_available` WHERE dish_id=dish_id_IN AND restaurant_id=restaurant_id_IN$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `isRestaurantOpen` (IN `restaurant_id_IN` INT)   SELECT COUNT(*) FROM restaurant WHERE restaurant_id_IN = id
+AND opening_time < CURRENT_TIME && CURRENT_TIME < closing_time$$
 
 DELIMITER ;
 
@@ -170,15 +185,16 @@ CREATE TABLE `restaurant` (
   `category` varchar(64) NOT NULL,
   `address` varchar(320) NOT NULL,
   `opening_time` time NOT NULL,
-  `closing_time` time NOT NULL
+  `closing_time` time NOT NULL,
+  `days_open` set('sun','mon','tue','wed','thu','fri','sat') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `restaurant`
 --
 
-INSERT INTO `restaurant` (`id`, `name`, `category`, `address`, `opening_time`, `closing_time`) VALUES
-(1, 'Test restaurant', 'test category', 'Test street 10', '08:00:00', '20:00:00');
+INSERT INTO `restaurant` (`id`, `name`, `category`, `address`, `opening_time`, `closing_time`, `days_open`) VALUES
+(1, 'Test restaurant', 'test category', 'Test street 10', '08:00:00', '20:00:00', 'mon,tue,wed,thu,fri');
 
 --
 -- Indexes for dumped tables

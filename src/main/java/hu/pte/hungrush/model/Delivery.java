@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -40,9 +42,13 @@ public class Delivery implements Serializable {
     @Basic(optional = false)
     @Column(name = "customer_id")
     private int customerId;
+    
+    @Column(columnDefinition = "ENUM('offline','idle','delivering')")
+    @Enumerated(EnumType.STRING)
     @Basic(optional = false)
-    @Column(name = "status")
-    private String status;
+    //@Column(name = "status")
+    private Courier.Status status;
+
 
     public Delivery() {
     }
@@ -51,7 +57,7 @@ public class Delivery implements Serializable {
         this.id = id;
     }
 
-    public Delivery(Integer id, int restaurantId, int courierId, int customerId, String status) {
+    public Delivery(Integer id, int restaurantId, int courierId, int customerId, Courier.Status status) {
         this.id = id;
         this.restaurantId = restaurantId;
         this.courierId = courierId;
@@ -91,11 +97,11 @@ public class Delivery implements Serializable {
         this.customerId = customerId;
     }
 
-    public String getStatus() {
+    public Courier.Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Courier.Status status) {
         this.status = status;
     }
 
