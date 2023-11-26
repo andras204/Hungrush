@@ -1,9 +1,3 @@
-# BREAKING CHANGES
-
-## The entire project has been redone, including the database. `git clone` the project again!
-
-## Check `sql/` for the database changes!
-
 # Hungrush
 
 This is a group project for a methodology of programming class.
