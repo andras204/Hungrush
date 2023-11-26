@@ -1,6 +1,7 @@
 package hu.pte.hungrush.service;
 
 import hu.pte.hungrush.model.Dish;
+import hu.pte.hungrush.model.Restaurant;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
@@ -10,6 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import hu.pte.hungrush.repo.RestaurantRepo;
+import java.sql.Time;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 @Service
@@ -36,7 +41,6 @@ public class RestaurantService {
         
         for(int i = 0; i < ids.size(); i++) {
             dish_decoder.setParameter("dish_id_IN", ids.get(i));
-            // getting data out of a generic Object requires this cancer
             Object[] o = (Object[]) dish_decoder.getSingleResult();
             Dish d = new Dish(
                     (Integer)o[0],
@@ -45,7 +49,6 @@ public class RestaurantService {
                     (Integer)o[3],
                     (String)o[4]
             );
-            // man, java is fking garbage
             dishes.add(d);
         }
         
@@ -61,4 +64,76 @@ public class RestaurantService {
         int result = Integer.parseInt(query.getSingleResult().toString());
         return result >= 1;
     }
+                                                      //, Time openingTime, Time closingTime//
+    public boolean isRestaurantOpen(Integer restaurantID) {
+           StoredProcedureQuery query = em.createStoredProcedureQuery("isRestaurantOpen");
+           query.registerStoredProcedureParameter("restaurant_id_IN", Integer.class, ParameterMode.IN);
+           query.setParameter("restaurant_id_IN", restaurantID);
+           int result = Integer.parseInt(query.getSingleResult().toString());
+           return result >= 1;
+//           LocalTime now = LocalTime.now();
+//           LocalTime openTime = openingTime.toLocalTime();
+//           LocalTime closeTime = closingTime.toLocalTime();
+//           
+//
+//        return now.isAfter(openTime) || now.isBefore(closeTime);
+}
+    
+            // Get all restaurants
+        public List<Restaurant> getRestaurantsJPA() {
+        return repo.findAll();
+        }
+        
+        // Get restaurant by ID
+    public Restaurant getRestaurant(Integer id) {
+        return repo.findById(id).get();
+    }
+        // Create a restaurant
+    public void addRestaurant(Restaurant restaurant) {
+        repo.save(restaurant);
+    }
+    
+        //Delete a restaurant
+    public void deleteRestaurant(Integer id) {
+        repo.deleteById(id);
+    }
+    
+        // Get Restaurants SPQ
+    public List<Restaurant> getAllRestaurantsSPQ() {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllRestaurants");
+        return spq.getResultList();
+    }
+    
+        // Add Restaurants SPQ
+    public void addRestaurantSPQ(Restaurant restaurant) {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("addRestaurant");
+        
+        spq.registerStoredProcedureParameter("meansoftransportIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("nameIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("phonenumberIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("statusIN", String.class, ParameterMode.IN);
+        
+        //set values for each parameter
+        spq.setParameter("addressIN", restaurant.getAddress());
+        spq.setParameter("categoryIN", restaurant.getCategory());
+        spq.setParameter("clostingtimeIN", restaurant.getClosingTime());
+        spq.setParameter("openingtimeIN", restaurant.getOpeningTime());
+        spq.setParameter("nameIN", restaurant.getName());
+        //spq.setParameter("daysopenIN", restaurant.getDaysOpen());
+        
+        spq.execute();
+    }
+    
+    
+        public void deleteRestaurantSPQ(Integer id) {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteRestaurant");
+        
+        spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+        spq.setParameter("idIN", id);
+        
+        spq.execute();
+        
+    }
+    
+
 }

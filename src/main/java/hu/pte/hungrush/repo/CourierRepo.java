@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 
 public interface CourierRepo extends JpaRepository<Courier, Integer> {
-    @Query(value="SELECT c FROM Courier c WHERE c.id = :id")
-    public List<Courier> findCourierByID(@Param("id")Integer id);
+//@Query(value="SELECT c FROM Courier c WHERE c.id = :id")
+//public List<Courier> findCourierByID(@Param("id")Integer id);
 }

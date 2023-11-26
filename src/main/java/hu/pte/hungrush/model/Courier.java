@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,25 +26,47 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Courier.findByPhoneNumber", query = "SELECT c FROM Courier c WHERE c.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Courier.findByStatus", query = "SELECT c FROM Courier c WHERE c.status = :status")})
 public class Courier implements Serializable {
-
+    
+        public enum MeansOfTransport {
+            
+            bicycle,
+            car,
+            moped;
+        }
+        
+        public enum Status {
+            
+            offline,
+            idle,
+            delivering;
+        }
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
+    
+    @Column(columnDefinition = "ENUM('bicycle','car','moped')")
+    @Enumerated(EnumType.STRING)
     @Basic(optional = false)
-    @Column(name = "means_of_transport")
-    private String meansOfTransport;
+    //@Column(name = "means_of_transport")
+    private MeansOfTransport meansOfTransport;
+    
+    
     @Basic(optional = false)
     @Column(name = "phone_number")
     private String phoneNumber;
+    
+    @Column(columnDefinition = "ENUM('offline','idle','delivering')")
+    @Enumerated(EnumType.STRING)
     @Basic(optional = false)
-    @Column(name = "status")
-    private String status;
+    //@Column(name = "status")
+    private Status status;
 
     public Courier() {
     }
@@ -51,7 +75,7 @@ public class Courier implements Serializable {
         this.id = id;
     }
 
-    public Courier(Integer id, String name, String meansOfTransport, String phoneNumber, String status) {
+    public Courier(Integer id, String name, MeansOfTransport meansOfTransport, String phoneNumber, Status status) {
         this.id = id;
         this.name = name;
         this.meansOfTransport = meansOfTransport;
@@ -75,11 +99,11 @@ public class Courier implements Serializable {
         this.name = name;
     }
 
-    public String getMeansOfTransport() {
+    public MeansOfTransport getMeansOfTransport() {
         return meansOfTransport;
     }
 
-    public void setMeansOfTransport(String meansOfTransport) {
+    public void setMeansOfTransport(MeansOfTransport meansOfTransport) {
         this.meansOfTransport = meansOfTransport;
     }
 
@@ -91,11 +115,11 @@ public class Courier implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

@@ -1,5 +1,6 @@
 package hu.pte.hungrush.service;
 
+import hu.pte.hungrush.model.Delivery;
 import hu.pte.hungrush.model.Dish;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,6 @@ public class DeliveryService {
         dish_decoder.registerStoredProcedureParameter("dish_id_IN", Integer.class, ParameterMode.IN);
         List<Dish> dishes = new ArrayList<Dish>();
         
-        // getting data out of a generic Object requires this cancer
         for(int i = 0; i < results.size(); i++) {
             Object[] touple = (Object[]) results.get(i);
             dish_decoder.setParameter("dish_id_IN", (Integer) touple[0]);
@@ -50,9 +50,62 @@ public class DeliveryService {
             for(int j = 0; j < (Integer) touple[1]; j++) {
                 dishes.add(d);
             }
-            // man, java is fking garbage
         }
         
         return dishes;
+    }
+    
+        // Get all customers
+        public List<Delivery> getDeliveriesJPA() {
+        return repo.findAll();
+        }
+        
+        // Get customer by ID
+    public Delivery getDelivery(Integer id) {
+        return repo.findById(id).get();
+    }
+        // Create a customer
+    public void addDelivery(Delivery customer) {
+        repo.save(customer);
+    }
+    
+        //Delete a customer
+    public void deleteDelivery(Integer id) {
+        repo.deleteById(id);
+    }
+    
+        // Get Deliverys SPQ
+    public List<Delivery> getAllDeliverysSPQ() {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllDeliverys");
+        return spq.getResultList();
+    }
+    
+        // Add Deliverys SPQ
+    public void addDeliverySPQ(Delivery customer) {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("addDelivery");
+        
+        spq.registerStoredProcedureParameter("courieridIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("customeridIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("restaurantidIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("statusIN", String.class, ParameterMode.IN);
+        
+        //set values for each parameter
+        spq.setParameter("courieridIN", customer.getCourierId());
+        spq.setParameter("customeridIN", customer.getCustomerId());
+        spq.setParameter("restaurantidIN", customer.getRestaurantId());
+        spq.setParameter("statusIN", customer.getStatus());
+        
+        spq.execute();
+    }
+    
+    
+        public void deleteDeliverySPQ(Integer id) {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteDelivery");
+        
+        spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+        spq.setParameter("idIN", id);
+        
+        spq.execute();
+        
     }
 }
