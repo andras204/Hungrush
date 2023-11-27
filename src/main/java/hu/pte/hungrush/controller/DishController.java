@@ -84,9 +84,9 @@ public class DishController {
         }
     } 
     
-    // Get all dishs Stored Procedure
-    @GetMapping(value="/dishs/spq")
-    public List<Dish> getAllDishsSPQ() {
+    // Get all dishes Stored Procedure
+    @GetMapping(value="/dishes/spq")
+    public List<Dish> getAllDishesSPQ() {
         return service.getAllDishesSPQ();
     }
     
@@ -101,6 +101,11 @@ public class DishController {
     @DeleteMapping(value="/removeDish/spq/{id}")
     public void deleteDishSPQ(@PathVariable Integer id) {
         service.deleteDishSPQ(id);
+    }
+    
+    @PutMapping(value="/updateDish/spq/")
+    public void updateDishSPQ(@RequestBody Dish dish) {
+        service.updateDishSPQ(dish);
     }
     
 }

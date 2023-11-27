@@ -53,7 +53,7 @@ public class RestaurantController {
     }
     
 
-    // gett restaurant by ID in JPA
+    // get restaurant by ID in JPA
     
     @GetMapping(value="/restaurant/jpa/{id}")
     public ResponseEntity<Restaurant> getRestaurant(@PathVariable Integer id) {
@@ -66,21 +66,21 @@ public class RestaurantController {
         }
     }
     
-    // create a new restaurant in JPA
+    // create a new restaurant JPA
     
     @PostMapping(value="/addRestaurant/jpa")
     public void addRestaurant(@RequestBody Restaurant c){
         service.addRestaurant(c);
     }
     
-    // Delete a restaurant in JPA
+    // Delete a restaurant JPA
     
     @DeleteMapping(value="/removeRestaurant/jpa/{id}")
     public void deleteRestaurant(@PathVariable Integer id) {
         service.deleteRestaurant(id);
     }    
     
-    // Edit a restaurant in JPA
+    // Edit a restaurant JPA
     
     @PutMapping(value="/editRestaurant/jpa/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@RequestBody Restaurant restaurant, @PathVariable Integer id) {
@@ -101,23 +101,36 @@ public class RestaurantController {
         }
     } 
     
-    // Get all restaurants Stored Procedure
+    // Get all restaurants SPQ
     @GetMapping(value="/restaurants/spq")
     public List<Restaurant> getAllRestaurantsSPQ() {
         return service.getAllRestaurantsSPQ();
     }
     
 
-    // Add restaurant Stored Procedure
+    // Add restaurant SPQ
     @PostMapping(value="/addRestaurant/spq")
     public void addRestaurantSPQ(@RequestBody Restaurant restaurant) {
         service.addRestaurantSPQ(restaurant);
     }
     
-    // Delete restaurant Stored Procedure
+    // Delete restaurant SPQ
     @DeleteMapping(value="/removeRestaurant/spq/{id}")
     public void deleteRestaurantSPQ(@PathVariable Integer id) {
         service.deleteRestaurantSPQ(id);
     }
+    // Update restaurant SPQ
+    @PutMapping(value="/updateRestaurant/spq/")
+    public void updateRestaurantSPQ(@RequestBody Restaurant restaurant) {
+        service.updateRestaurantSPQ(restaurant);
+    }
     
+        @GetMapping(value="/getRestaurantCategory/spq/{id}")
+    public String getRestaurantCategorySPQ(Integer id) {
+        return service.getRestaurantCategory(id);
+    }
+        @GetMapping(value="/getOpenRestaurants/spq/")
+    public List<Restaurant> getOpenRestaurantsSPQ() {
+        return service.getOpenRestaurants();
+    }
 }

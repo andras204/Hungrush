@@ -97,5 +97,9 @@ public class DeliveryController {
         service.deleteDeliverySPQ(id);
     }
     
+    @PutMapping(value="/updateDelivery/spq/")
+    public void updateDeliverySPQ(@RequestBody Delivery delivery) {
+        service.updateDeliverySPQ(delivery);
+    }
     
 }

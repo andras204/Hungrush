@@ -53,9 +53,9 @@ public class CustomerController {
         service.deleteCustomer(id);
     }    
     
-    // Edit a customer in JPA
+    // Update a customer in JPA
     
-    @PutMapping(value="/editCustomer/jpa/{id}")
+    @PutMapping(value="/updateCustomer/jpa/{id}")
     public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer, @PathVariable Integer id) {
         try {
             Customer existingCustomer = service.getCustomer(id);
@@ -89,6 +89,11 @@ public class CustomerController {
     @DeleteMapping(value="/removeCustomer/spq/{id}")
     public void deleteCustomerSPQ(@PathVariable Integer id) {
         service.deleteCustomerSPQ(id);
+    }
+    
+    @PutMapping(value="/updateCustomer/spq/")
+    public void updateCustomerSPQ(@RequestBody Customer customer) {
+        service.updateCustomerSPQ(customer);
     }
     
 }

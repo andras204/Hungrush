@@ -62,6 +62,12 @@ public class DishService {
         repo.deleteById(id);
     }
     
+    
+        // ---------SPQ----------
+    
+    
+    
+    
         // Get Dishes SPQ
     public List<Dish> getAllDishesSPQ() {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllDishes");
@@ -96,4 +102,22 @@ public class DishService {
         spq.execute();
         
     }
+        // Update dish SPQ
+        public void updateDishSPQ(Dish dish) {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("updateDish");
+        spq.registerStoredProcedureParameter("dishidIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("CategoryIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("imageUrlIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("nameIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("priceIN", String.class, ParameterMode.IN);
+        
+        spq.setParameter("dishidIN", dish.getId());
+        spq.setParameter("categoryIN", dish.getCategory());
+        spq.setParameter("imageUrlIN", dish.getImageUrl());
+        spq.setParameter("nameIN", dish.getName());
+        spq.setParameter("priceIN", dish.getPrice());
+
+    spq.execute();
+}
+
 }

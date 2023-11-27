@@ -20,25 +20,37 @@ public class CustomerService {
     
         @PersistenceContext
     private EntityManager em;
+        
+            
     
-        // Get all customers
+        // ---------JPA----------
+    
+    
+    
+    
+
+        // Get all customers JPA
         public List<Customer> getCustomersJPA() {
         return repo.findAll();
         }
         
-        // Get customer by ID
+        // Get customer by ID JPA
     public Customer getCustomer(Integer id) {
         return repo.findById(id).get();
     }
-        // Create a customer
+        // Create a customer JPA
     public void addCustomer(Customer customer) {
         repo.save(customer);
     }
     
-        //Delete a customer
+        //Delete a customer JPA
     public void deleteCustomer(Integer id) {
         repo.deleteById(id);
     }
+
+    // ---------SPQ----------
+    
+    
     
         // Get Customers SPQ
     public List<Customer> getAllCustomersSPQ() {
@@ -64,7 +76,7 @@ public class CustomerService {
         spq.execute();
     }
     
-    
+        // Delete Customer SPQ
         public void deleteCustomerSPQ(Integer id) {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteCustomer");
         
@@ -74,4 +86,25 @@ public class CustomerService {
         spq.execute();
         
     }
+        
+        //Update customer SPQ
+    public void updateCustomerSPQ(Customer customer) {
+
+    StoredProcedureQuery spq = em.createStoredProcedureQuery("updateCustomer");
+    spq.registerStoredProcedureParameter("idIN", Integer.class, ParameterMode.IN);
+    spq.registerStoredProcedureParameter("nameIN", String.class, ParameterMode.IN);
+    spq.registerStoredProcedureParameter("addressIN", String.class, ParameterMode.IN);
+    spq.registerStoredProcedureParameter("emailIN", String.class, ParameterMode.IN);
+    spq.registerStoredProcedureParameter("phoneNumberIN", String.class, ParameterMode.IN);
+
+    spq.setParameter("idIN", customer.getId());
+    spq.setParameter("nameIN", customer.getName());
+    spq.setParameter("addressIN", customer.getAddress());
+    spq.setParameter("emailIN", customer.getEmail());
+    spq.setParameter("phoneNumberIN", customer.getPhoneNumber());
+
+
+    spq.execute();
+
+}
 }

@@ -21,6 +21,14 @@ public class CourierService {
     @PersistenceContext
     private EntityManager em;
     
+            
+    
+        // ---------JPA----------
+    
+    
+    
+    
+
         // Get all couriers
         public List<Courier> getCouriersJPA() {
         return repo.findAll();
@@ -39,15 +47,22 @@ public class CourierService {
     public void deleteCourier(Integer id) {
         repo.deleteById(id);
     }
+        
+    
+        // ---------SPQ----------
+    
+    
+    
+    
     
         // Get Couriers SPQ
-    public List<Courier> getAllCouriersSPQ() {
+        public List<Courier> getAllCouriersSPQ() {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllCouriers");
         return spq.getResultList();
     }
     
         // Add Couriers SPQ
-    public void addCourierSPQ(Courier courier) {
+        public void addCourierSPQ(Courier courier) {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("addCourier");
         
         spq.registerStoredProcedureParameter("meansoftransportIN", String.class, ParameterMode.IN);
@@ -73,5 +88,30 @@ public class CourierService {
         
         spq.execute();
         
+    }
+        
+        // Update Courier SPQ
+        public void updateCourierSPQ(Courier courier) {
+
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("updateCourier");
+        spq.registerStoredProcedureParameter("meansoftransportIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("nameIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("phonenumberIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("statusIN", String.class, ParameterMode.IN);
+
+        spq.setParameter("meansoftransportIN", courier.getMeansOfTransport());
+        spq.setParameter("nameIN", courier.getName());
+        spq.setParameter("phonenumberIN", courier.getPhoneNumber());
+        spq.setParameter("statusIN", courier.getStatus());
+
+
+    spq.execute();
+
+}
+        // Gets all idle couriers
+            public List<Courier> getIdleCouriers() {
+        StoredProcedureQuery query = em.createStoredProcedureQuery("getIdleCouriers");
+
+        return query.getResultList();
     }
 }

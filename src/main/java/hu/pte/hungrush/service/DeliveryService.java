@@ -22,11 +22,11 @@ public class DeliveryService {
     
     @PersistenceContext
     private EntityManager em;
-    
-    public List<Dish> getOrderedDishes(Integer oredrID) {
+
+    public List<Dish> getOrderedDishes(Integer orderID) {
         StoredProcedureQuery query = em.createStoredProcedureQuery("getOrderedDishes");
         query.registerStoredProcedureParameter("delivery_id_IN", Integer.class, ParameterMode.IN);
-        query.setParameter("delivery_id_IN", oredrID);
+        query.setParameter("delivery_id_IN", orderID);
         List<Object> results = query.getResultList();
         
         // get the dishes from IDs
@@ -55,33 +55,49 @@ public class DeliveryService {
         return dishes;
     }
     
-        // Get all customers
+            
+            
+    
+        // ---------JPA----------
+    
+    
+    
+    
+
+    
+        // Get all deliveries
         public List<Delivery> getDeliveriesJPA() {
         return repo.findAll();
         }
         
-        // Get customer by ID
+        // Get delivery by ID
     public Delivery getDelivery(Integer id) {
         return repo.findById(id).get();
     }
-        // Create a customer
-    public void addDelivery(Delivery customer) {
-        repo.save(customer);
+        // Create a delivery
+    public void addDelivery(Delivery delivery) {
+        repo.save(delivery);
     }
     
-        //Delete a customer
+        //Delete a delivery
     public void deleteDelivery(Integer id) {
         repo.deleteById(id);
     }
     
-        // Get Deliverys SPQ
+    
+        // ---------SPQ----------
+    
+    
+    
+    
+        // Get Deliveries SPQ
     public List<Delivery> getAllDeliverysSPQ() {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllDeliverys");
         return spq.getResultList();
     }
     
-        // Add Deliverys SPQ
-    public void addDeliverySPQ(Delivery customer) {
+        // Add Deliveries SPQ
+    public void addDeliverySPQ(Delivery delivery) {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("addDelivery");
         
         spq.registerStoredProcedureParameter("courieridIN", String.class, ParameterMode.IN);
@@ -90,15 +106,15 @@ public class DeliveryService {
         spq.registerStoredProcedureParameter("statusIN", String.class, ParameterMode.IN);
         
         //set values for each parameter
-        spq.setParameter("courieridIN", customer.getCourierId());
-        spq.setParameter("customeridIN", customer.getCustomerId());
-        spq.setParameter("restaurantidIN", customer.getRestaurantId());
-        spq.setParameter("statusIN", customer.getStatus());
+        spq.setParameter("courieridIN", delivery.getCourierId());
+        spq.setParameter("customeridIN", delivery.getCustomerId());
+        spq.setParameter("restaurantidIN", delivery.getRestaurantId());
+        spq.setParameter("statusIN", delivery.getStatus());
         
         spq.execute();
     }
     
-    
+        // Delete Delivery SPQ
         public void deleteDeliverySPQ(Integer id) {
         StoredProcedureQuery spq = em.createStoredProcedureQuery("deleteDelivery");
         
@@ -108,4 +124,28 @@ public class DeliveryService {
         spq.execute();
         
     }
+        //Update Delivery SPQ
+        public void updateDeliverySPQ(Delivery delivery) {
+
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("updateDelivery");
+        spq.registerStoredProcedureParameter("deliveryidIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("courieridIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("customeridIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("restaurantidIN", String.class, ParameterMode.IN);
+        spq.registerStoredProcedureParameter("statusIN", String.class, ParameterMode.IN);
+        
+        //set values for each parameter 
+        spq.setParameter("deliveryidIN", delivery.getCourierId());
+        spq.setParameter("courieridIN", delivery.getCourierId());
+        spq.setParameter("customeridIN", delivery.getCustomerId());
+        spq.setParameter("restaurantidIN", delivery.getRestaurantId());
+        spq.setParameter("statusIN", delivery.getStatus());
+
+
+    spq.execute();
+
+}
+                
+                
+                
 }

@@ -97,6 +97,15 @@ public class CourierController {
         service.deleteCourierSPQ(id);
     }
     
+    @PutMapping(value="/updateCourier/spq/")
+    public void updateCourierSPQ(@RequestBody Courier courier) {
+        service.updateCourierSPQ(courier);
+    }
     
+        @GetMapping("/getIdleCouriers/spq")
+    public List<Courier> getIdleCouriers() {
+       return service.getIdleCouriers();
+    }
+
     
 }
