@@ -21,7 +21,6 @@ public class CourierController {
     @Autowired
     private CourierService service;
         @Autowired
-    private EntityManager entityManager;
         
         
     // get all couriers in JPA
@@ -61,7 +60,7 @@ public class CourierController {
     
     // Edit a courier in JPA
     
-    @PutMapping(value="/editCourier/jpa/{id}")
+    @PutMapping(value="/updateCourier/jpa/{id}")
     public ResponseEntity<Courier> updateCourier(@RequestBody Courier courier, @PathVariable Integer id) {
         try {
             Courier existingCourier = service.getCourier(id);
@@ -77,6 +76,10 @@ public class CourierController {
             return new ResponseEntity<> (HttpStatus.NOT_FOUND);
         }
     } 
+    
+    
+    // ---SPQ---
+    
     
     // Get all couriers Stored Procedure
     @GetMapping(value="/couriers/spq")

@@ -9,10 +9,13 @@ import hu.pte.hungrush.repo.DeliveryRepo;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 import javax.persistence.Tuple;
+import javax.persistence.TypedQuery;
+import org.springframework.data.jpa.repository.Query;
 
 @Service
 @Transactional
@@ -145,7 +148,6 @@ public class DeliveryService {
     spq.execute();
 
 }
-                
-                
-                
+
+           
 }

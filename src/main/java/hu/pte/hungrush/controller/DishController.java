@@ -108,4 +108,9 @@ public class DishController {
         service.updateDishSPQ(dish);
     }
     
+    
+    @PostMapping(value="/getDishByCategory/{category}")
+    public List<Dish>getDishesByCategory(@PathVariable String category) {
+        return service.getDishesByCategory(category);
+    }
 }

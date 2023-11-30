@@ -7,9 +7,15 @@ import org.springframework.transaction.annotation.Transactional;
 import hu.pte.hungrush.repo.DishRepo;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
+import javax.persistence.TypedQuery;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import static org.springframework.jdbc.core.JdbcOperationsExtensionsKt.query;
+import org.springframework.util.CollectionUtils;
 
 @Service
 @Transactional
@@ -119,5 +125,17 @@ public class DishService {
 
     spq.execute();
 }
+        
+        
+public List<Dish> getDishesByCategory(String category) {
+    List <Dish> result = repo.getDishesByCategory(category);
+    if(CollectionUtils.isEmpty(result) ) {
+        throw new NoResultException();
+    } else {
+        return result;
+    }
+} 
+
+
 
 }
