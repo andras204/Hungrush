@@ -113,4 +113,12 @@ public class DishController {
     public List<Dish>getDishesByCategory(@PathVariable String category) {
         return service.getDishesByCategory(category);
     }
+    
+    
+        @GetMapping(value = "/sortDishesByPrice")
+    public List<Dish> sortDishesByPrice() {
+    return service.sortDishesByPrice();
+    }
+    
+    
 }

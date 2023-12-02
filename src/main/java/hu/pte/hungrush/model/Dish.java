@@ -12,7 +12,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @Entity
 @Table(name = "dish")
 @XmlRootElement
@@ -123,5 +122,5 @@ public class Dish implements Serializable {
     public String toString() {
         return "hu.pte.hungrush.models.Dish[ id=" + id + " ]";
     }
-    
+
 }

@@ -21,115 +21,112 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RestaurantController {
+
     @Autowired
     private RestaurantService service;
-    
+
     @Autowired
     private EntityManager entityManager;
-    
+
     @GetMapping("/restaurant/{id}/availableDishes")
     public List<Dish> getAvailableDishes(@PathVariable Integer id) {
         return service.getAvailableDishes(id);
     }
-    
+
     @GetMapping("/restaurant/{r_id}/dishAvailable/{d_id}")
     public Boolean getAvailableDishes(@PathVariable Integer d_id, @PathVariable Integer r_id) {
         return service.isDishAvailableAtRestaurant(d_id, r_id);
     }
-    
-        @GetMapping("/restaurant/{r_id}")
+
+    @GetMapping("/restaurant/{r_id}")
     public Boolean isRestaurantOpen(@PathVariable Integer r_id) {
         return service.isRestaurantOpen(r_id);
     }
-        @Transactional
+
+    @Transactional
     public List<Restaurant> listRestaurantCategory() {
         TypedQuery<Restaurant> query = entityManager.createQuery("SELECT r FROM Restaurant r", Restaurant.class);
         return query.getResultList();
     }
-    
-            @GetMapping("/restaurant/jpa")
+
+    @GetMapping("/restaurant/jpa")
     public List<Restaurant> getAllRestaurants() {
         return service.getRestaurantsJPA();
     }
-    
 
     // get restaurant by ID in JPA
-    
-    @GetMapping(value="/restaurant/jpa/{id}")
+    @GetMapping(value = "/restaurant/jpa/{id}")
     public ResponseEntity<Restaurant> getRestaurant(@PathVariable Integer id) {
         try {
             Restaurant restaurant = service.getRestaurant(id);
-            return new ResponseEntity<Restaurant> (restaurant, HttpStatus.OK);
-            
-        } catch(NoSuchElementException e) {
-            return new ResponseEntity<Restaurant> (HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Restaurant>(restaurant, HttpStatus.OK);
+
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<Restaurant>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
     // create a new restaurant JPA
-    
-    @PostMapping(value="/addRestaurant/jpa")
-    public void addRestaurant(@RequestBody Restaurant c){
+    @PostMapping(value = "/addRestaurant/jpa")
+    public void addRestaurant(@RequestBody Restaurant c) {
         service.addRestaurant(c);
     }
-    
+
     // Delete a restaurant JPA
-    
-    @DeleteMapping(value="/removeRestaurant/jpa/{id}")
+    @DeleteMapping(value = "/removeRestaurant/jpa/{id}")
     public void deleteRestaurant(@PathVariable Integer id) {
         service.deleteRestaurant(id);
-    }    
-    
+    }
+
     // Edit a restaurant JPA
-    
-    @PutMapping(value="/editRestaurant/jpa/{id}")
+    @PutMapping(value = "/editRestaurant/jpa/{id}")
     public ResponseEntity<Restaurant> updateRestaurant(@RequestBody Restaurant restaurant, @PathVariable Integer id) {
         try {
             Restaurant existingRestaurant = service.getRestaurant(id);
-            
+
             existingRestaurant.setCategory(restaurant.getCategory());
             existingRestaurant.setAddress(restaurant.getAddress());
             existingRestaurant.setClosingTime(restaurant.getClosingTime());
             existingRestaurant.setOpeningTime(restaurant.getOpeningTime());
             existingRestaurant.setName(restaurant.getName());
             service.addRestaurant(existingRestaurant);
-            
-            
-            return new ResponseEntity<> (HttpStatus.OK);
-        } catch(NoSuchElementException e) {
-            return new ResponseEntity<> (HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    } 
-    
+    }
+
     // Get all restaurants SPQ
-    @GetMapping(value="/restaurants/spq")
+    @GetMapping(value = "/restaurants/spq")
     public List<Restaurant> getAllRestaurantsSPQ() {
         return service.getAllRestaurantsSPQ();
     }
-    
 
     // Add restaurant SPQ
-    @PostMapping(value="/addRestaurant/spq")
+    @PostMapping(value = "/addRestaurant/spq")
     public void addRestaurantSPQ(@RequestBody Restaurant restaurant) {
         service.addRestaurantSPQ(restaurant);
     }
-    
+
     // Delete restaurant SPQ
-    @DeleteMapping(value="/removeRestaurant/spq/{id}")
+    @DeleteMapping(value = "/removeRestaurant/spq/{id}")
     public void deleteRestaurantSPQ(@PathVariable Integer id) {
         service.deleteRestaurantSPQ(id);
     }
+
     // Update restaurant SPQ
-    @PutMapping(value="/updateRestaurant/spq/")
+    @PutMapping(value = "/updateRestaurant/spq/")
     public void updateRestaurantSPQ(@RequestBody Restaurant restaurant) {
         service.updateRestaurantSPQ(restaurant);
     }
-    
-        @GetMapping(value="/getRestaurantCategory/spq/{id}")
+
+    @GetMapping(value = "/getRestaurantCategory/spq/{id}")
     public String getRestaurantCategorySPQ(Integer id) {
         return service.getRestaurantCategory(id);
     }
-        @GetMapping(value="/getOpenRestaurants/spq/")
+
+    @GetMapping(value = "/getOpenRestaurants/spq/")
     public List<Restaurant> getOpenRestaurantsSPQ() {
         return service.getOpenRestaurants();
     }

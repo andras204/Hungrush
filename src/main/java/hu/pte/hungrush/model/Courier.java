@@ -14,7 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @Entity
 @Table(name = "courier")
 @XmlRootElement
@@ -26,42 +25,41 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Courier.findByPhoneNumber", query = "SELECT c FROM Courier c WHERE c.phoneNumber = :phoneNumber"),
     @NamedQuery(name = "Courier.findByStatus", query = "SELECT c FROM Courier c WHERE c.status = :status")})
 public class Courier implements Serializable {
-    
-        public enum MeansOfTransport {
-            
-            bicycle,
-            car,
-            moped;
-        }
-        
-        public enum Status {
-            
-            offline,
-            idle,
-            delivering;
-        }
+
+    public enum MeansOfTransport {
+
+        bicycle,
+        car,
+        moped;
+    }
+
+    public enum Status {
+
+        offline,
+        idle,
+        delivering;
+    }
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    
+
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-    
+
     @Column(columnDefinition = "ENUM('bicycle','car','moped')")
     @Enumerated(EnumType.STRING)
     @Basic(optional = false)
     //@Column(name = "means_of_transport")
     private MeansOfTransport meansOfTransport;
-    
-    
+
     @Basic(optional = false)
     @Column(name = "phone_number")
     private String phoneNumber;
-    
+
     @Column(columnDefinition = "ENUM('offline','idle','delivering')")
     @Enumerated(EnumType.STRING)
     @Basic(optional = false)
@@ -147,5 +145,5 @@ public class Courier implements Serializable {
     public String toString() {
         return "hu.pte.hungrush.models.Courier[ id=" + id + " ]";
     }
-    
+
 }

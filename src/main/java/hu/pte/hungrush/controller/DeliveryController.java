@@ -18,88 +18,86 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DeliveryController {
+
     @Autowired
     private DeliveryService service;
-    
+
     @GetMapping("/delivery/{id}/orderedDishes")
     public List<Dish> getOrderedDishes(@PathVariable Integer id) {
         return service.getOrderedDishes(id);
     }
-    
-            @GetMapping("/delivery/jpa")
+
+    @GetMapping("/delivery/jpa")
     public List<Delivery> getAllDeliveries() {
         return service.getDeliveriesJPA();
     }
-    
 
     // gett delivery by ID in JPA
-    
-    @GetMapping(value="/delivery/jpa/{id}")
+    @GetMapping(value = "/delivery/jpa/{id}")
     public ResponseEntity<Delivery> getDelivery(@PathVariable Integer id) {
         try {
             Delivery delivery = service.getDelivery(id);
-            return new ResponseEntity<Delivery> (delivery, HttpStatus.OK);
-            
-        } catch(NoSuchElementException e) {
-            return new ResponseEntity<Delivery> (HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Delivery>(delivery, HttpStatus.OK);
+
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<Delivery>(HttpStatus.NOT_FOUND);
         }
     }
-    
+
     // create a new delivery in JPA
-    
-    @PostMapping(value="/addDelivery/jpa")
-    public void addDelivery(@RequestBody Delivery c){
+    @PostMapping(value = "/addDelivery/jpa")
+    public void addDelivery(@RequestBody Delivery c) {
         service.addDelivery(c);
     }
-    
+
     // Delete a delivery in JPA
-    
-    @DeleteMapping(value="/removeDelivery/jpa/{id}")
+    @DeleteMapping(value = "/removeDelivery/jpa/{id}")
     public void deleteDelivery(@PathVariable Integer id) {
         service.deleteDelivery(id);
-    }    
-    
+    }
+
     // Edit a delivery in JPA
-    
-    @PutMapping(value="/editDelivery/jpa/{id}")
+    @PutMapping(value = "/editDelivery/jpa/{id}")
     public ResponseEntity<Delivery> updateDelivery(@RequestBody Delivery delivery, @PathVariable Integer id) {
         try {
             Delivery existingDelivery = service.getDelivery(id);
-            
+
             existingDelivery.setId(delivery.getRestaurantId());
             existingDelivery.setId(delivery.getCourierId());
             existingDelivery.setId(delivery.getCustomerId());
             existingDelivery.setStatus(delivery.getStatus());
             service.addDelivery(existingDelivery);
-            
-            return new ResponseEntity<> (HttpStatus.OK);
-        } catch(NoSuchElementException e) {
-            return new ResponseEntity<> (HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-    } 
-    
+    }
+
     // Get all deliveries Stored Procedure
-    @GetMapping(value="/deliverys/spq")
+    @GetMapping(value = "/deliverys/spq")
     public List<Delivery> getAllDeliverysSPQ() {
         return service.getAllDeliverysSPQ();
     }
-    
 
     // Add delivery Stored Procedure
-    @PostMapping(value="/addDelivery/spq")
+    @PostMapping(value = "/addDelivery/spq")
     public void addDeliverySPQ(@RequestBody Delivery delivery) {
         service.addDeliverySPQ(delivery);
     }
-    
+
     // Delete delivery Stored Procedure
-    @DeleteMapping(value="/removeDelivery/spq/{id}")
+    @DeleteMapping(value = "/removeDelivery/spq/{id}")
     public void deleteDeliverySPQ(@PathVariable Integer id) {
         service.deleteDeliverySPQ(id);
     }
-    
-    @PutMapping(value="/updateDelivery/spq/")
+
+    @PutMapping(value = "/updateDelivery/spq/")
     public void updateDeliverySPQ(@RequestBody Delivery delivery) {
         service.updateDeliverySPQ(delivery);
     }
-    
+        @GetMapping(value = "getDeliveriesByCustomerId/{id}")
+    public List<Delivery> ggetDeliveriesByCustomerId(Long customerId) {
+    return service.getDeliveriesByCustomerId(customerId);
+    }
 }

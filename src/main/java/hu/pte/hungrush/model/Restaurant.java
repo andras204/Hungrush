@@ -13,7 +13,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @Entity
 @Table(name = "restaurant")
 @XmlRootElement
@@ -138,6 +137,4 @@ public class Restaurant implements Serializable {
         return "hu.pte.hungrush.models.Restaurant[ id=" + id + " ]";
     }
 
-
-    
 }

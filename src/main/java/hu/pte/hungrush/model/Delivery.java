@@ -14,7 +14,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
-
 @Entity
 @Table(name = "delivery")
 @XmlRootElement
@@ -42,13 +41,12 @@ public class Delivery implements Serializable {
     @Basic(optional = false)
     @Column(name = "customer_id")
     private int customerId;
-    
+
     @Column(columnDefinition = "ENUM('offline','idle','delivering')")
     @Enumerated(EnumType.STRING)
     @Basic(optional = false)
     //@Column(name = "status")
     private Courier.Status status;
-
 
     public Delivery() {
     }
@@ -129,5 +127,5 @@ public class Delivery implements Serializable {
     public String toString() {
         return "hu.pte.hungrush.models.Delivery[ id=" + id + " ]";
     }
-    
+
 }
