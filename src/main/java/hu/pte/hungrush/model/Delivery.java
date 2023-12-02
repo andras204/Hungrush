@@ -9,6 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -32,15 +34,19 @@ public class Delivery implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    
     @Basic(optional = false)
-    @Column(name = "restaurant_id")
-    private int restaurantId;
+    @JoinColumn(name = "restaurant_id", referencedColumnName = "id")
+    @ManyToOne
+    private Restaurant restaurantId;
     @Basic(optional = false)
-    @Column(name = "courier_id")
-    private int courierId;
+    @JoinColumn(name = "courier_id", referencedColumnName = "id")
+    @ManyToOne
+    private Courier courierId;
     @Basic(optional = false)
-    @Column(name = "customer_id")
-    private int customerId;
+    @JoinColumn(name = "customer_id", referencedColumnName="id")
+    @ManyToOne
+    private Customer customerId;
 
     @Column(columnDefinition = "ENUM('offline','idle','delivering')")
     @Enumerated(EnumType.STRING)
@@ -55,7 +61,7 @@ public class Delivery implements Serializable {
         this.id = id;
     }
 
-    public Delivery(Integer id, int restaurantId, int courierId, int customerId, Courier.Status status) {
+    public Delivery(Integer id, Restaurant restaurantId, Courier courierId, Customer customerId, Courier.Status status) {
         this.id = id;
         this.restaurantId = restaurantId;
         this.courierId = courierId;
@@ -71,27 +77,27 @@ public class Delivery implements Serializable {
         this.id = id;
     }
 
-    public int getRestaurantId() {
+    public Restaurant getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(int restaurantId) {
+    public void setRestaurantId(Restaurant restaurantId) {
         this.restaurantId = restaurantId;
     }
 
-    public int getCourierId() {
+    public Courier getCourierId() {
         return courierId;
     }
 
-    public void setCourierId(int courierId) {
+    public void setCourierId(Courier courierId) {
         this.courierId = courierId;
     }
 
-    public int getCustomerId() {
+    public Customer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Customer customerId) {
         this.customerId = customerId;
     }
 

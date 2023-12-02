@@ -80,8 +80,8 @@ public class DeliveryService {
 
     // ---------SPQ----------
     // Get Deliveries SPQ
-    public List<Delivery> getAllDeliverysSPQ() {
-        StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllDeliverys");
+    public List<Delivery> getAllDeliveriesSPQ() {
+        StoredProcedureQuery spq = em.createStoredProcedureQuery("getAllDeliveries");
         return spq.getResultList();
     }
 

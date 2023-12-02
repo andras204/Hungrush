@@ -62,9 +62,9 @@ public class DeliveryController {
         try {
             Delivery existingDelivery = service.getDelivery(id);
 
-            existingDelivery.setId(delivery.getRestaurantId());
-            existingDelivery.setId(delivery.getCourierId());
-            existingDelivery.setId(delivery.getCustomerId());
+            existingDelivery.setRestaurantId(delivery.getRestaurantId());
+            existingDelivery.setCourierId(delivery.getCourierId());
+            existingDelivery.setCustomerId(delivery.getCustomerId());
             existingDelivery.setStatus(delivery.getStatus());
             service.addDelivery(existingDelivery);
 
@@ -75,9 +75,9 @@ public class DeliveryController {
     }
 
     // Get all deliveries Stored Procedure
-    @GetMapping(value = "/deliverys/spq")
-    public List<Delivery> getAllDeliverysSPQ() {
-        return service.getAllDeliverysSPQ();
+    @GetMapping(value = "/delivery/spq")
+    public List<Delivery> getAllDeliveriesSPQ() {
+        return service.getAllDeliveriesSPQ();
     }
 
     // Add delivery Stored Procedure
