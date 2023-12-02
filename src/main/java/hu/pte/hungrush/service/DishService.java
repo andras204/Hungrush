@@ -61,8 +61,8 @@ public class DishService {
     }
     // Create a dish
 
-    public void addDish(Dish dish) {
-        repo.save(dish);
+    public Dish addDish(Dish dish) {
+        return repo.save(dish);
     }
 
     //Delete a dish

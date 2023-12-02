@@ -33,8 +33,8 @@ public class CustomerService {
     }
     // Create a customer JPA
 
-    public void addCustomer(Customer customer) {
-        repo.save(customer);
+    public Customer addCustomer(Customer customer) {
+        return repo.save(customer);
     }
 
     //Delete a customer JPA

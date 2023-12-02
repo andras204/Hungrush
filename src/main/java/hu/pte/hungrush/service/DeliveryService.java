@@ -69,8 +69,8 @@ public class DeliveryService {
     }
     // Create a delivery
 
-    public void addDelivery(Delivery delivery) {
-        repo.save(delivery);
+    public Delivery addDelivery(Delivery delivery) {
+        return repo.save(delivery);
     }
 
     //Delete a delivery

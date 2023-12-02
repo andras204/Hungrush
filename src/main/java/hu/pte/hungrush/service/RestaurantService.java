@@ -106,8 +106,8 @@ public class RestaurantService {
     }
     // Create a restaurant
 
-    public void addRestaurant(Restaurant restaurant) {
-        repo.save(restaurant);
+    public Restaurant addRestaurant(Restaurant restaurant) {
+        return repo.save(restaurant);
     }
 
     //Delete a restaurant

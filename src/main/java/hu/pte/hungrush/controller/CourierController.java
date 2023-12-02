@@ -29,7 +29,7 @@ public class CourierController {
         return service.getCouriersJPA();
     }
 
-    // gett courier by ID in JPA
+    // get courier by ID in JPA
     @GetMapping(value = "/courier/jpa/{id}")
     public ResponseEntity<Courier> getCourier(@PathVariable Integer id) {
         try {

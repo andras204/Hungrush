@@ -39,8 +39,8 @@ public class CourierService {
         return repo.findById(id).get();
     }
         // Create a courier
-    public void addCourier(Courier courier) {
-        repo.save(courier);
+    public Courier addCourier(Courier courier) {
+        return repo.save(courier);
     }
     
         //Delete a courier
