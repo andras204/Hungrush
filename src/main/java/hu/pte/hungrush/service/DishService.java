@@ -5,18 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import hu.pte.hungrush.repo.DishRepo;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.persistence.TypedQuery;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import static org.springframework.jdbc.core.JdbcOperationsExtensionsKt.query;
 import org.springframework.util.CollectionUtils;
 
 @Service
@@ -39,17 +33,7 @@ public class DishService {
         return result >= 1;
     }
 
-//    
-//        public Dish getDish(Integer id) {
-//        return repo.findById(id).get();
-//    }
-//    public Dish getDish(Integer id) throws Exception {
-//        Optional<Dish> result = repo.findById(id);
-//        if(result.isEmpty()) {
-//            throw new Exception("no dish with id \"" + id + "\"");
-//        }
-//        return result.get();
-//    }
+
     // Get all dishes
     public List<Dish> getDishesJPA() {
         return repo.findAll();
